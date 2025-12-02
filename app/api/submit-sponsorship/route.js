@@ -1,23 +1,23 @@
-// app/api/submit-sponsorship/route.js
+
 
 import { NextResponse } from 'next/server';
-import { supabaseServer } from '@/utils/supabase-server'; // Use the secure server client
+import { supabaseServer } from '@/utils/supabase-server'; 
 
-// Define the POST handler for the API route
+
 export async function POST(request) {
     try {
-        // 1. Parse the JSON body from the request
+        
         const formData = await request.json();
 
-        // 2. Simple server-side validation check
+        
         if (!formData.name || !formData.email || !formData.company) {
             return NextResponse.json(
                 { message: 'Missing required fields (name, email, company).' },
-                { status: 400 } // Bad Request
+                { status: 400 } 
             );
         }
 
-        // 3. Insert data into Supabase using the secure server client
+        
         const { data, error } = await supabaseServer
             .from('sponsorship_requests')
             .insert([
@@ -35,21 +35,21 @@ export async function POST(request) {
             console.error('Supabase Error:', error);
             return NextResponse.json(
                 { message: 'Database insertion failed.' },
-                { status: 500 } // Internal Server Error
+                { status: 500 } 
             );
         }
 
-        // 4. Success Response
+        
         return NextResponse.json(
             { message: 'Sponsorship request submitted successfully.', data },
-            { status: 201 } // Created
+            { status: 201 } 
         );
 
     } catch (error) {
         console.error('API Route Error:', error);
         return NextResponse.json(
             { message: 'An unexpected error occurred.' },
-            { status: 500 } // Internal Server Error
+            { status: 500 } 
         );
     }
 }

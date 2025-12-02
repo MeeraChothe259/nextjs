@@ -1,6 +1,6 @@
-// app/sponsorship/page.js
 
-'use client'; // Required for client-side hooks and interaction
+
+'use client'; 
 
 import { useState } from 'react';
 
@@ -20,7 +20,7 @@ export default function SponsorshipPage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevData => ({ ...prevData, [name]: value }));
-    // Clear status on input change
+    
     setSubmissionStatus(null); 
   };
 
@@ -28,16 +28,14 @@ export default function SponsorshipPage() {
     e.preventDefault();
     setLoading(true);
 
-    // Client-side Validation Check
+    
     if (!formData.name || !formData.email || !formData.company) {
       setSubmissionStatus('error');
       setLoading(false);
       return;
     }
     
-    // ------------------------------------------------------------------
-    // SECURE SUBMISSION: Sending data to the local Next.js API route
-    // ------------------------------------------------------------------
+    
     try {
         const response = await fetch('/api/submit-sponsorship', {
             method: 'POST',
@@ -48,18 +46,18 @@ export default function SponsorshipPage() {
         });
 
         if (response.ok) {
-            // API returned status 201 (Created)
+            
             setSubmissionStatus('success');
-            // Clear form after successful submission
+            
             setFormData({ name: '', email: '', company: '', website: '', interest_level: 'Bronze', message: '' }); 
         } else {
-            // API returned status 400 or 500
+            
             const errorData = await response.json();
             console.error('API Error:', errorData.message);
             setSubmissionStatus('error_db');
         }
     } catch (error) {
-        // Network or fetch failure
+        
         console.error('Fetch Error:', error);
         setSubmissionStatus('error_db');
     } finally {

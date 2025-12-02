@@ -1,15 +1,14 @@
-// app/apply/page.js
 
-'use client'; // Required for using client-side hooks and interaction
 
+'use client'; 
 import { useState } from 'react';
 
 export default function ApplyPage() {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    position: 'developer', // Default value
-    resume: null, // File object
+    position: 'developer', 
+    resume: null, 
   });
 
   const [submissionStatus, setSubmissionStatus] = useState(null);
@@ -22,34 +21,33 @@ export default function ApplyPage() {
       [name]: type === 'file' ? files[0] : value,
     }));
 
-    // Clear status on input change
+    
     setSubmissionStatus(null); 
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Check if any required fields are missing
+    
     if (!formData.fullName || !formData.email || !formData.position) {
       setSubmissionStatus('error');
       return;
     }
 
-    // Check email format using a simple regex (Client-side validation)
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
         setSubmissionStatus('invalid_email');
         return;
     }
     
-    // Simulate form submission to an API
+    
     console.log("Submitting form data:", formData);
     
-    // Success state
+    
     setSubmissionStatus('success');
     
-    // In a real application, you would send this data to an API here.
-    // fetch('/api/apply', { method: 'POST', body: JSON.stringify(formData) }) 
+    
   };
 
   return (
@@ -86,7 +84,7 @@ export default function ApplyPage() {
               type="text"
               name="fullName"
               id="fullName"
-              required // HTML5 built-in validation
+              required 
               value={formData.fullName}
               onChange={handleChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
@@ -102,7 +100,7 @@ export default function ApplyPage() {
               type="email"
               name="email"
               id="email"
-              required // HTML5 built-in validation
+              required 
               value={formData.email}
               onChange={handleChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
