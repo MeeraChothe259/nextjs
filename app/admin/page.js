@@ -1,25 +1,23 @@
-// app/admin/page.js (This is the Server Component that fetches data securely)
+import { supabaseServer } from '@/utils/supabase-server';
+import AdminTable from './AdminTable';
 
-import { supabaseServer } from '@/utils/supabase-server'; // Secure server client
-import AdminTable from './AdminTable'; // Import the client-side table
 
-// --- Data Fetching Function (Runs on the Server) ---
+
 async function getSponsorshipRequests() {
   const { data, error } = await supabaseServer
     .from('sponsorship_requests')
-    .select('*') // Select all columns
-    .order('created_at', { ascending: false }); // Order by newest first
+    .select('*');
 
   if (error) {
     console.error('Error fetching requests:', error);
-    // Return null or throw an error for robust handling
+    
     return { data: null, error: error.message }; 
   }
 
   return { data, error: null };
 }
 
-// --- Main Server Component ---
+
 export default async function AdminPage() {
   const { data: requests, error } = await getSponsorshipRequests();
 
